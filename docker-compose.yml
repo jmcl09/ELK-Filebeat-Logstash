@@ -1,0 +1,104 @@
+      version: "3"
+      services:
+        elasticsearch:
+          image: elasticsearch:7.12.0
+          hostname: elasticsearch
+          container_name: elastic
+          volumes:
+              - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+            #- type: bind
+            #  source: ./elasticsearch/config/elasticsearch.yml
+            #  target: /usr/share/elasticsearch/config/elasticsearch.yml
+            #  read_only: true
+            #- type: volume
+            #  source: elasticsearch
+            #  target: /usr/share/elasticsearch/data
+          ports:
+            - 9200:9200
+          environment:
+            ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+            ELASTIC_PASSWORD: changeme
+          networks:
+            - mi-puente
+
+        filebeat:
+          image: store/elastic/filebeat:7.12.0
+          hostname: filebeat_host
+          container_name: filebeat
+          command: filebeat -e -strict.perms=false
+          #volumnes mount depend on you OS ( Windows or Linux )
+          volumes:
+            - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
+            - ./filebeat/share:/var/log
+            # - type: bind
+            #  source: ./filebeat/filebeat.yml
+            # target: /usr/share/filebeat/config/filebeat.yml
+            # read_only: true
+            # - type: volume
+            #  source: filebeat
+            # target: /usr/share/filebeat/data
+          networks:
+            - mi-puente
+          depends_on:
+            - kibana
+          restart: on-failure
+          links:
+            - kibana
+
+        kibana:
+          image: kibana:7.12.0
+          container_name: kibana
+          hostname: kibana
+          volumes:
+            - type: bind
+              source: ./kibana/config/kibana.yml
+              target: /usr/share/kibana/kibana.yml
+              read_only: true
+            - type: volume
+              source: kibana
+              target: /usr/share/kibana/data
+          environment:
+            ELASTICSEARCH_URL: http://elasticsearch:9200
+            ELASTICSEARCH_USERNAME: elastic
+            ELASTICSEARCH_PASSWORD: changeme
+          healthcheck:
+            test: ["CMD", "curl", "-f", "http://localhost:5601"]
+            interval: 30s
+            timeout: 10s
+            retries: 5
+          ports:
+            - 5601:5601
+          networks:
+            - mi-puente
+          depends_on:
+            - elasticsearch
+
+        logstash:
+          image: docker.elastic.co/logstash/logstash-oss:7.12.0
+          container_name: logstash
+          hostname: logstash_host
+          volumes:
+            - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml
+            - ./logstash/pipeline/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+          ports:
+            - "5044:5044"
+            - "5000:5000/tcp"
+            - "5000:5000/udp"
+            - "9600:9600"
+          environment:
+            ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+          networks:
+            - mi-puente
+          depends_on:
+            - elasticsearch
+
+      networks:
+        mi-puente:
+          driver: bridge
+      volumes:
+        filebeat:
+          driver: local
+        elasticsearch:
+          driver: local
+        kibana:
+          driver: local
