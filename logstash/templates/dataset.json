@@ -1,0 +1,18 @@
+{
+    "index_patterns":["dataset-*"],
+    "settings":{
+        "number_of_shards":1,
+        "number_of_replicas":0
+    },
+    "mappings":{
+        "properties":{
+            "ip": {"type":"ip"},
+            "date":{"type": "date","format": "dd/MMM/yyyy:HH:mm:ss Z"},
+            "peticion":{"type":"text"},
+            "status":{"type":"integer"},
+            "pid":{"type":"keyword"},
+            "url":{"type":"keyword"},
+            "navegador":{"type":"keyword"}
+        }
+    }
+}

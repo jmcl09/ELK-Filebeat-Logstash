@@ -3,4 +3,16 @@
 ## from https://github.com/elastic/logstash-docker/blob/master/build/logstash/config/logstash-oss.yml
 #
 http.host: "0.0.0.0"
-path.config: /usr/share/logstash/pipeline
+path.config: /usr/share/logstash/pipeline/logstash.conf
+#path.data: /user/share/logstash
+config.reload.automatic: true
+config.reload.interval: 5s
+#xpack.monitoring.collection.enabled: true
+#xpack.monitoring.enabled: true
+#xpack.monitoring.enabled: true
+#xpack.monitoring.elasticsearch.hosts: http://elasticsearch:9200
+#xpack.monitoring.enabled: true
+#xpack.monitoring.elasticsearch.url: ["http://elasticsearch:9200"]
+#xpack.monitoring.elasticsearch.username: logstash_system
+#xpack.monitoring.elasticsearch.password: changeme
+#xpack.monitoring.collection.pipeline.details.enabled: true

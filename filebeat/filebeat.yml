@@ -13,29 +13,33 @@ filebeat.inputs:
     #json.keys_under_root: true
     #json.overwrite_keys: true
 
-    exclude_lines: ["^www.three.com"]
-    multiline.pattern: ^www.*
-    multiline.negate: true
-    multiline.match: after
+  #  exclude_lines: ["^www.three.com"] # Excluir las que empiecen por www.three.com
+   # multiline.pattern: ^www.* #Comience por www. y cualquier cosa
+    #multiline.negate: true #Negar el patrón para encontrar las que no coincidan con el evento
+   # multiline.match: after #Añadir lo que no coincida con el patrón al evento anterior
 
 setup.kibana:
   host: kibana:5601
   username: elastic
   password: 1234
-  
 
-output.elasticsearch:
-  hosts: ["elasticsearch:9200"]
-  username: elastic
-  password: 1234
-  index: "ngis-%{+yyyy.MM.dd}"
+setup.template.enabled: false
+
+#output.elasticsearch:
+ # hosts: ["elasticsearch:9200"]
+  #username: elastic
+  #password: 1234
+  #index: "ngis-%{+yyyy.MM.dd}"
 
 output.logstash:
   hosts: ["logstash_host:5044"]
 #output.console:
 #  pretty: true
 
-setup.template.enabled: false
+
+#xpack.monitoring.enabled: true
+#xpack.monitoring.collection: true
+
 setup.ilm.enabled: false
 ilm.enabled: false
 setup.template.overwrite: false
