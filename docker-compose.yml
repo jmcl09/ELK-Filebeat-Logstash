@@ -6,13 +6,13 @@
           container_name: elastic
           volumes:
               - ./elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
-            #- type: bind
-            #  source: ./elasticsearch/config/elasticsearch.yml
-            #  target: /usr/share/elasticsearch/config/elasticsearch.yml
-            #  read_only: true
-            #- type: volume
-            #  source: elasticsearch
-            #  target: /usr/share/elasticsearch/data
+#            - type: bind
+#              source: ./elasticsearch/config/elasticsearch.yml
+#              target: /usr/share/elasticsearch/config/elasticsearch.yml
+#              read_only: true
+#            - type: volume
+#              source: elasticsearch
+#              target: /usr/share/elasticsearch/data
           ports:
             - 9200:9200
           environment: 
@@ -78,9 +78,9 @@
           networks:
             - mi-puente
           restart: on-failure:15
-          #depends_on:
-            #elasticsearch:
-              #condition: service_healthy #Comprueba el healthcheck de elastic
+#          depends_on:
+#            elasticsearch:
+#              condition: service_healthy #Comprueba el healthcheck de elastic
           deploy:
             resources:
               limits:
@@ -96,14 +96,14 @@
             - ./logstash/logs:/usr/share/logstash/logs # Ruta para guardar los logs de muestra 
             - ./logstash/patterns:/usr/share/logstash/patterns # Guardaremos los patrones
             - ./logstash/templates:/usr/share/logstash/templates # Ruta donde guardaremos las plantillas
-            #- ./logstash/config/startup.options:/usr/share/logstash/config/startup.options
+#            - ./logstash/config/startup.options:/usr/share/logstash/config/startup.options
           ports:
             - "5044:5044"
             - "5000:5000/tcp"
             - "5000:5000/udp"
             - "9600:9600"
           environment:
-            ES_JAVA_OPTS: "-Xmx256m -Xms256m"
+            ES_JAVA_OPTS: "-Xmx600m -Xms600m"
           networks:
             - mi-puente
           depends_on:

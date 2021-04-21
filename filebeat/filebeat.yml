@@ -3,48 +3,37 @@ filebeat.inputs:
     enabled: true
     paths: 
       - /var/log/*.log
-      #- /var/log/*.json
-    #reload.enabled: true
-    #reload.period: 10s
+#      - /var/log/*.json
+#    reload.enabled: true
+#    reload.period: 10s
 #- type: json
- # paths:
-  #  - /var/log/*.json
-    #json.message_key: "message"
-    #json.keys_under_root: true
-    #json.overwrite_keys: true
+#  paths:
+#    - /var/log/*.json
+#    json.message_key: "message"
+#    json.keys_under_root: true
+#    json.overwrite_keys: true
 
-  #  exclude_lines: ["^www.three.com"] # Excluir las que empiecen por www.three.com
-   # multiline.pattern: ^www.* #Comience por www. y cualquier cosa
-    #multiline.negate: true #Negar el patrón para encontrar las que no coincidan con el evento
-   # multiline.match: after #Añadir lo que no coincida con el patrón al evento anterior
+#    exclude_lines: ["^www.three.com"] # Excluir las que empiecen por www.three.com
+#    multiline.pattern: ^www.* #Comience por www. y cualquier cosa
+#    multiline.negate: true #Negar el patrón para encontrar las que no coincidan con el evento
+#    multiline.match: after #Añadir lo que no coincida con el patrón al evento anterior
 
 setup.kibana:
   host: kibana:5601
   username: elastic
   password: 1234
 
-setup.template.enabled: false
-
 #output.elasticsearch:
- # hosts: ["elasticsearch:9200"]
-  #username: elastic
-  #password: 1234
-  #index: "ngis-%{+yyyy.MM.dd}"
+#  hosts: ["elasticsearch:9200"]
+#  username: elastic
+#  password: 1234
+#  index: "ngis-%{+yyyy.MM.dd}"
 
 output.logstash:
   hosts: ["logstash_host:5044"]
+  bulk_max_size: 10
+
+
 #output.console:
 #  pretty: true
 
-
-#xpack.monitoring.enabled: true
-#xpack.monitoring.collection: true
-
-setup.ilm.enabled: false
-ilm.enabled: false
-setup.template.overwrite: false
-setup.template.name: "ngis"
-setup.template.pattern: "ngis-*"
-setup.dashboards.enabled: true
-setup.template.settings.index.lifecycle.rollover_alias: "ngis"
-setup.template.settings.index.lifecycle.name: "beats-default-policy"
