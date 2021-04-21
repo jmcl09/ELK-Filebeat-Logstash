@@ -3,13 +3,15 @@ filebeat.inputs:
     enabled: true
     paths: 
       - /var/log/core*.log
-    tags: ["core","cajamar"]
+    fields:
+      tags: core
 
   - type: log
     enabled: true
     paths: 
       - /var/log/dataset*.log
-    tags: ["dataset","web"]
+    fields:
+      tags: dataset
 
 #      - /var/log/*.json
 #    reload.enabled: true
@@ -39,7 +41,8 @@ setup.kibana:
 
 output.logstash:
   hosts: ["logstash_host:5044"]
-  bulk_max_size: 10
+  #bulk_max_size: 100
+  client_inactivity_timeout: 360
 
 
 #output.console:

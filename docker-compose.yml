@@ -25,11 +25,11 @@
             interval: 30s
             timeout: 10s
             retries: 5
-          deploy: # LIMITAR LOS RECURSOS
-            resources:
-              limits:
-                cpus: 0.5 #De 2Cpus
-                memory: 2048M #De 7GB
+      #    deploy: # LIMITAR LOS RECURSOS
+       #     resources:
+        #      limits:
+         #       cpus: 0.5 #De 2Cpus
+          #      memory: 2048M #De 7GB
         filebeat:
           image: store/elastic/filebeat:7.12.0
           hostname: filebeat_host
@@ -46,11 +46,11 @@
           restart: on-failure:15
           links:
             - kibana
-          deploy:
-            resources:
-              limits:
-                cpus: 0.25
-                memory: 1536M
+      #    deploy:
+       #     resources:
+        #      limits:
+         #       cpus: 0.25
+          #      memory: 1536M
           user: root
         kibana:
           image: kibana:7.12.0
@@ -82,11 +82,11 @@
 #          depends_on:
 #            elasticsearch:
 #              condition: service_healthy #Comprueba el healthcheck de elastic
-          deploy:
-            resources:
-              limits:
-                cpus: 0.5
-                memory: 1036M
+       #   deploy:
+        #    resources:
+         #     limits:
+          #      cpus: 0.5
+           #     memory: 1036M
         logstash:
           image: docker.elastic.co/logstash/logstash-oss:7.12.0
           container_name: logstash
@@ -116,11 +116,11 @@
             - elasticsearch
           restart: on-failure:15 #MIRAR EL TEMA DE ONFAILURE N VECES
           user: root
-          deploy:
-            resources:
-              limits:
-                cpus: 0.75
-                memory: 2048M
+        ##  deploy:
+         #   resources:
+          #    limits:
+           #     cpus: 0.75
+            #    memory: 2048M
       networks:
         mi-puente:
           driver: bridge
