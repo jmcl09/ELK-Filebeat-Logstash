@@ -36,13 +36,13 @@
           container_name: filebeat
           command: filebeat -e -strict.perms=false
           volumes:
-            - ./filebeat/filebeat.yml:/usr/share/filebeat/filebeat.yml
+            - ./filebeat/config/filebeat.yml:/usr/share/filebeat/filebeat.yml
             - ./filebeat/logs:/var/log
           networks:
             - mi-puente
-          #depends_on:
-            #kibana:
-              #condition: service_healthy
+#          depends_on:
+#            kibana:
+#              condition: service_healthy
           restart: on-failure:15
           links:
             - kibana
@@ -57,13 +57,14 @@
           container_name: kibana
           hostname: kibana
           volumes:
-            - type: bind
-              source: ./kibana/config/kibana.yml
-              target: /usr/share/kibana/kibana.yml
-              read_only: true
-            - type: volume
-              source: kibana
-              target: /usr/share/kibana/data
+            - ./kibana/config/kibana.yml:/usr/share/kibana/kibana.yml       
+#            - type: bind
+#              source: ./kibana/config/kibana.yml
+#              target: /usr/share/kibana/kibana.yml
+#              read_only: true
+#            - type: volume
+#              source: kibana
+#              target: /usr/share/kibana/data
           environment:
             ELASTICSEARCH_URL: http://elasticsearch:9200
             ELASTICSEARCH_USERNAME: elastic
@@ -92,11 +93,12 @@
           hostname: logstash_host #Nombre del host
           volumes:
             - ./logstash/config/logstash.yml:/usr/share/logstash/config/logstash.yml #Archivo de configuracion de logstash
-            - ./logstash/configuration/logstash.conf:/usr/share/logstash/pipeline/logstash.conf # Archivo de configuracion
-            - ./logstash/logs:/usr/share/logstash/logs # Ruta para guardar los logs de muestra 
+            - ./logstash/config/pipelines.yml:/usr/share/logstash/config/pipelines.yml # Archivo de configuracion de las pipelines
+            - ./logstash/config/startup.options:/usr/share/logstash/config/startup.options
+            - ./logstash/pipeline:/usr/share/logstash/pipeline # Carpetas que tendrán .conf
             - ./logstash/patterns:/usr/share/logstash/patterns # Guardaremos los patrones
             - ./logstash/templates:/usr/share/logstash/templates # Ruta donde guardaremos las plantillas
-#            - ./logstash/config/startup.options:/usr/share/logstash/config/startup.options
+            - ./logstash/logs:/usr/share/logstash/logs # Ruta para guardar los logs de muestra 
           ports:
             - "5044:5044"
             - "5000:5000/tcp"
@@ -109,7 +111,7 @@
           depends_on:
             filebeat:
               condition: service_healthy
-          command: ["logstash","-f","/usr/share/logstash/pipeline/logstash.conf"]
+#          command: ["logstash","-f","/usr/share/logstash/pipeline/logstash.conf"]
           depends_on:
             - elasticsearch
           restart: on-failure:15 #MIRAR EL TEMA DE ONFAILURE N VECES

@@ -2,7 +2,15 @@ filebeat.inputs:
   - type: log
     enabled: true
     paths: 
-      - /var/log/*.log
+      - /var/log/core*.log
+    tags: ["core","cajamar"]
+
+  - type: log
+    enabled: true
+    paths: 
+      - /var/log/dataset*.log
+    tags: ["dataset","web"]
+
 #      - /var/log/*.json
 #    reload.enabled: true
 #    reload.period: 10s

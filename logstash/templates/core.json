@@ -1,0 +1,20 @@
+{
+    "index_patterns":["core-*"],
+    "settings":{
+        "number_of_shards":1,
+        "number_of_replicas":0
+    },
+    "mappings":{
+        "properties":{
+            "type": {"type":"text"},
+            "fecha":{"type": "date","format": "dd/MMM/yyyy:HH:mm:ss,SSS"},
+            "pid":{"type":"text"},
+            "status":{"type":"integer"},
+            "description":{"type":"keyword"},
+            "class":{"type":"keyword"},
+            "line":{"type":"keyword"},
+            "action":{"type":"keyword"},
+            "time_execution":{"type":"keyword"}
+        }
+    }
+}
