@@ -1,24 +1,28 @@
-# List of pipelines to be loaded by Logstash
-#
-# This document must be a list of dictionaries/hashes, where the keys/values are pipeline settings.
-# Default values for omitted settings are read from the `logstash.yml` file.
-# When declaring multiple pipelines, each MUST have its own `pipeline.id`.
-#
-# Example of two pipelines:
-#
+ - pipeline.id: in-out-conf
+   pipeline.workers: 1
+   pipeline.batch.size: 100
+   path.config: "/usr/share/logstash/pipeline/in-out.conf"
+
  - pipeline.id: dataset-conf
-   pipeline.workers: 2
+   #pipeline.workers: 2
    pipeline.batch.size: 100
    path.config: "/usr/share/logstash/pipeline/dataset.conf"
 
-#   config.string: "input { generator {} } filter { sleep { time => 1 } } output { stdout { codec => dots } }"
  - pipeline.id: core-conf
-   pipeline.workers: 2
+   #pipeline.workers: 2
    pipeline.batch.size: 100
    path.config: "/usr/share/logstash/pipeline/core.conf"
-#   queue.type: persisted
-#   path.config: "/tmp/logstash/*.config"
-#
+
+ - pipeline.id: apache-conf
+   pipeline.batch.size: 100
+   path.config: "/usr/share/logstash/pipeline/apache.conf"
+
+ - pipeline.id: cajamar-conf
+   pipeline.workers: 1
+   pipeline.batch.size: 100
+   path.config: "/usr/share/logstash/pipeline/cajamar.conf"
+
+
 # Available options:
 #
 #   # name of the pipeline

@@ -1,18 +1,43 @@
+
+filebeat.config.modules.path: /usr/share/filebeat/modules.d/*.yml
+
 filebeat.inputs:
   - type: log
+    paths: /var/log/core*.log
     enabled: true
-    paths: 
-      - /var/log/core*.log
     fields:
       tags: core
 
   - type: log
+    paths: /var/log/dataset*.log
     enabled: true
-    paths: 
-      - /var/log/dataset*.log
     fields:
       tags: dataset
+  
+  - type: log
+    paths: /var/log/access_log*.*
+    enabled: true
+    fields:
+      tags: apache
+  
+  - type: log
+    paths: /var/log/cajamar*.log
+    enabled: true
+    fields:
+      tags: cajamar
 
+    multiline.pattern: ^(TRACE|DEBUG|INFO|WARN) #Comience por..
+    multiline.match: after #Añadir lo que no coincida con el patrón al evento anterior
+    multiline.negate: true #Negar el patrón para encontrar las que no coincidan con el evento
+    
+    
+
+filebeat.modules:
+  - module: apache
+    access:
+      var.paths: ["/var/log/access_log*.*"]
+   # fields:
+    #  tags: apache
 #      - /var/log/*.json
 #    reload.enabled: true
 #    reload.period: 10s
@@ -24,9 +49,8 @@ filebeat.inputs:
 #    json.overwrite_keys: true
 
 #    exclude_lines: ["^www.three.com"] # Excluir las que empiecen por www.three.com
-#    multiline.pattern: ^www.* #Comience por www. y cualquier cosa
-#    multiline.negate: true #Negar el patrón para encontrar las que no coincidan con el evento
-#    multiline.match: after #Añadir lo que no coincida con el patrón al evento anterior
+
+
 
 setup.kibana:
   host: kibana:5601

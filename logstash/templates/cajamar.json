@@ -1,0 +1,21 @@
+{
+    "index_patterns":["cajamar-*"],
+    "settings":{
+        "number_of_shards":1,
+        "number_of_replicas":0
+    },
+    "mappings":{
+        "properties":{
+            "level": {"type":"text"},
+            "date":{"type": "date","format": "dd/MM/YYY HH:mm:ss,SSS"},
+            "name":{"type":"text"},
+            "pid":{"type":"integer"},
+            "status":{"type":"text"},
+            "description":{"type":"keyword"},
+            "class":{"type":"keyword"}, 
+            "line":{"type":"keyword"},
+            "method":{"type":"text"},
+            "xml":{"type":"text"}
+        }
+    }
+}
