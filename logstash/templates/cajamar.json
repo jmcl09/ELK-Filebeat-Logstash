@@ -1,5 +1,5 @@
 {
-    "index_patterns":["cajamar-*"],
+    "index_patterns":["cajamar*"],
     "settings":{
         "number_of_shards":1,
         "number_of_replicas":0
@@ -7,15 +7,15 @@
     "mappings":{
         "properties":{
             "level": {"type":"text"},
-            "date":{"type": "date","format": "dd/MM/YYY HH:mm:ss,SSS"},
+            "date":{"type": "date","format": "dd/mm/yyyy hh:mm:ss,SSS"},
             "name":{"type":"text"},
-            "pid":{"type":"integer"},
+            "pid":{"type":"text"},
             "status":{"type":"text"},
             "description":{"type":"keyword"},
             "class":{"type":"keyword"}, 
             "line":{"type":"keyword"},
             "method":{"type":"text"},
-            "xml":{"type":"text"}
+            "result":{"type":"text"}
         }
     }
 }
