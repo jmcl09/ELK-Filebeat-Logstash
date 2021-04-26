@@ -7,7 +7,7 @@
     "mappings":{
         "properties":{
             "level": {"type":"text"},
-            "date":{"type": "date","format": "dd/mm/yyyy hh:mm:ss,SSS"},
+            "date":{"type": "date", "format":"dd/MM/yyyy HH:mm:ss,SSS"},
             "name":{"type":"text"},
             "pid":{"type":"text"},
             "status":{"type":"text"},

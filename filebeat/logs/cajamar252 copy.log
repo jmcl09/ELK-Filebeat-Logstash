@@ -1,4 +1,5 @@
 DEBUG 15/04/2021 08:58:05,026 SDBASUDBARIPRLN 16184626850253194780 [ACTIVE] ExecuteThread: '69' for queue: 'weblogic.kernel.Default (self-tuning)' cb.fwk.schema.Module.initializeData:979 SDBASUDBARIPRLN INPUT: <?xml version="1.0" encoding="UTF-8"?>
+DEBUG 15/04/2021 08:58:05,026 SDBASUDBARIPRLN 16184626850253194780 [ACTIVE] ExecuteThread: '69' for queue: 'weblogic.kernel.Default (self-tuning)' cb.fwk.schema.Module.initializeData:979 SDBASUDBARIPRLN INPUT: <?xml version="1.0" encoding="UTF-8"?>
 <INPUT>
     <SYSTEM>
         <ID_ITRL_FI>3058</ID_ITRL_FI>
