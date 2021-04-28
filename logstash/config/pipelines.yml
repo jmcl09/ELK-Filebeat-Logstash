@@ -1,7 +1,7 @@
-# - pipeline.id: in-out-conf
-  # pipeline.workers: 1
-   #pipeline.batch.size: 100
-   #path.config: "/usr/share/logstash/pipeline/in-out.conf"
+ - pipeline.id: in-out-conf
+   pipeline.workers: 1
+   pipeline.batch.size: 100
+   path.config: "/usr/share/logstash/pipeline/in-out.conf"
 
  #- pipeline.id: dataset-conf
    #pipeline.workers: 2
@@ -17,16 +17,11 @@
   # pipeline.batch.size: 100
    #path.config: "/usr/share/logstash/pipeline/apache.conf"
 
- #- pipeline.id: cajamar-conf
-  # pipeline.workers: 1
-   #pipeline.batch.size: 100
-   #path.config: "/usr/share/logstash/pipeline/cajamar.conf"
-
- - pipeline.id: todo-conf
-   pipeline.workers: 2
+ - pipeline.id: cajamar-conf
+   pipeline.workers: 1
    pipeline.batch.size: 100
-   path.config: "/usr/share/logstash/pipeline/TODO.conf"
-
+   path.config: "/usr/share/logstash/pipeline/cajamar.conf"
+   
 # Available options:
 #
 #   # name of the pipeline
